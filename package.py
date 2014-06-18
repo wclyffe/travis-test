@@ -1,0 +1,2 @@
+# packaging script
+print('test')
