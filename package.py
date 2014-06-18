@@ -25,14 +25,14 @@ import shutil
 
 
 current_dir = os.path.dirname(__file__)
-package_dir = os.path.join(current_dir, 'foo-package')
+#package_dir = os.path.join(current_dir, 'foo-package')
+package_dir : "./foo-package"
 print("current_dir: {}".format(current_dir))
 print("package_dir: {}".format(package_dir))
 
 archive_name = shutil.make_archive(base_name='foo-package',
                                    format="zip",
-                                   verbose=True,
-                                   root_dir=current_dir,
+                                   #root_dir=current_dir,
                                    base_dir=package_dir)
 
 print("archive_name: {}".format(archive_name))
