@@ -26,7 +26,7 @@ import shutil
 
 current_dir = os.path.dirname(__file__)
 #package_dir = os.path.join(current_dir, 'foo-package')
-package_dir = "./foo-package"
+package_dir = "foo-package"
 print("current_dir: {}".format(current_dir))
 print("package_dir: {}".format(package_dir))
 
