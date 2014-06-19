@@ -1,15 +1,15 @@
 language: python
 python:
-- '3.3'
+  - '3.3'
 script:
-- python package.py
+  - python package.py
 deploy:
   provider: releases
   api_key:
     secure: AmNrf5n6XyMfGKeuGv861tJi19TMUU9BBFE0xNQDmSmGbeycTft6zLEiCxVWjkNnP6X9y2fOUzVEkH8DulJRO0YXIk4Z9gdBrPFWxtlNq69ybHYcgxxpyQCHV2LoKFVwyPxk9QQOm+XhccMaFmGm47/fpZc1okM9YuVpAJd1qr4=
-  file: foo-package.zip
+  file: "foo-package.zip"
   skip_cleanup: true
   on:
     repo: wclyffe/travis-test
-    branch: master
+    all_branches: true
     tags: true
