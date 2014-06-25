@@ -1,30 +1,43 @@
-# packaging script
+import configparser
+import json
 import os
 import shutil
+import urllib.request
 
-# High-level utilities to create and read compressed and archived files are also provided. They rely on the zipfile and tarfile modules.
-#
-# shutil.make_archive(base_name, format[, root_dir[, base_dir[, verbose[, dry_run[, owner[, group[, logger]]]]]]])
-#
-#     Create an archive file (such as zip or tar) and return its name.
-#
-#     base_name is the name of the file to create, including the path, minus any format-specific extension.
-#
-#     format is the archive format: one of “zip”, “tar”, “bztar” (if the bz2 module is available) or “gztar”.
-#
-#     root_dir is a directory that will be the root directory of the archive;
-#              for example, we typically chdir into root_dir before creating the archive.
-#
-#     base_dir is the directory where we start archiving from; i.e. base_dir will be the common prefix of all files and directories in the archive.
-#
-#     root_dir and base_dir both default to the current directory.
-#
-#     owner and group are used when creating a tar archive. By default, uses the current owner and group.
-#
-#     logger must be an object compatible with PEP 282, usually an instance of logging.Logger.
+
+gh_api = 'https://api.github.com'
+gh_owner = 'wclyffe'
+gh_repo = 'travis-test'
+
+gh_releases = '/repos/{owner}/{repo}/releases'.format(owner=gh_owner,repo=gh_repo)
+gh_tags = '/repos/{owner}/{repo}/tags'.format(owner=gh_owner,repo=gh_repo)
+
+response = urllib.request.urlopen(gh_api + gh_releases)
+releases = json.loads(response.read().decode(encoding='utf-8'))
+last_release = releases[0]
+
+last_release_tag_name = last_release['tag_name']
+last_release_date = last_release['published_at']
+
+response = urllib.request.urlopen(gh_api + gh_tags)
+tags = json.loads(response.read().decode(encoding='utf-8'))
+last_release_tag = None
+for tag in tags:
+    if tag['name'] == last_release_tag_name:
+        last_release_tag = tag
+        break
+last_release_commit = last_release_tag['commit']['sha']
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 package_dir = 'foo-package'
+
+release_info = configparser.ConfigParser()
+release_info['VERSION'] = {'tag_name': last_release_tag_name,
+                           'date': last_release_date,
+                           'commit': last_release_commit}
+with open('release_info', 'w') as configfile:
+    release_info.write(configfile)
+
 
 archive_name = shutil.make_archive(base_name='foo-package',
                                    format="zip",
