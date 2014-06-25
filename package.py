@@ -24,8 +24,12 @@ import shutil
 #     logger must be an object compatible with PEP 282, usually an instance of logging.Logger.
 
 cwd = os.getcwd()
+
+current_dir = os.path.dirname(__file__)
 package_dir = os.path.join(cwd, 'foo-package')
 
+print("current working dir: {}".format(cwd))
+print("current file dir: {}".format(current_dir))
 
 archive_name = shutil.make_archive(base_name='foo-package',
                                    format="zip",
