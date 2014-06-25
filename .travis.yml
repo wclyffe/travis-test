@@ -2,7 +2,7 @@ language: python
 python:
   - '3.3'
 script:
-  - python package.py
+  - ./package.py
 deploy:
   provider: releases
   api_key:
