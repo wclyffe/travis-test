@@ -35,7 +35,7 @@ release_info = configparser.ConfigParser()
 release_info['VERSION'] = {'tag_name': last_release_tag_name,
                            'date': last_release_date,
                            'commit': last_release_commit}
-with open('release_info', 'w') as configfile:
+with open(os.path.join(current_dir, package_dir, 'release_info'), 'w') as configfile:
     release_info.write(configfile)
 
 
