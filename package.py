@@ -25,7 +25,7 @@ import shutil
 
 cwd = os.getcwd()
 
-current_dir = os.path.dirname(__file__)
+current_dir = os.path.dirname(os.path.abspath(__file__))
 package_dir = os.path.join(cwd, 'foo-package')
 
 print("current working dir: {}".format(cwd))
